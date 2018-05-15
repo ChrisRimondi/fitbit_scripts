@@ -51,10 +51,16 @@ for i in fitbit_stats3['sleep'][0]['minuteData']:
 sleepdf = pd.DataFrame({'State':sval_list,
                      'Time':stime_list})
 sleepdf['Interpreted'] = sleepdf['State'].map({'2':'Awake','3':'Very Awake','1':'Asleep'})
+sleepdf['year'] = datetime.datetime.strptime(yesterday2,"%Y-%m-%d").year 
+sleepdf['month'] = datetime.datetime.strptime(yesterday2,"%Y-%m-%d").month
+sleepdf['day'] = datetime.datetime.strptime(yesterday2,"%Y-%m-%d").day
+sleepdf['dow'] = datetime.datetime.strptime(yesterday2,"%Y-%m-%d").isoweekday() 
 sleepdf.to_csv('sleep_' + \
                yesterday2+'.csv', \
-               columns = ['Time','State','Interpreted'],header=True, \
+               columns = ['Time','State','Interpreted','year','month','day','dow'],header=True, \
                index = False)
+
+
 
 #get sleep data / should be today
 fitbit_stats3 = auth2_client.sleep(date='today')
@@ -69,7 +75,11 @@ for i in fitbit_stats3['sleep'][0]['minuteData']:
 sleepdf = pd.DataFrame({'State':sval_list,
                      'Time':stime_list})
 sleepdf['Interpreted'] = sleepdf['State'].map({'2':'Awake','3':'Very Awake','1':'Asleep'})
+sleepdf['year'] = datetime.datetime.strptime(today2,"%Y-%m-%d").year
+sleepdf['month'] = datetime.datetime.strptime(today2,"%Y-%m-%d").month
+sleepdf['day'] = datetime.datetime.strptime(today2,"%Y-%m-%d").day
+sleepdf['dow'] = datetime.datetime.strptime(today2,"%Y-%m-%d").isoweekday()
 sleepdf.to_csv('sleep_' + \
                today2+'.csv', \
-               columns = ['Time','State','Interpreted'],header=True, \
+               columns = ['Time','State','Interpreted','year','month','day','dow'],header=True, \
                index = False)
