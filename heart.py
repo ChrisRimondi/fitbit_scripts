@@ -45,8 +45,12 @@ for i in stats2['activities-heart-intraday']['dataset']:
     time_list.append(i['time'])
 
 heartdf = pd.DataFrame({'Heart Rate':val_list,'Time':time_list})
+heartdf['year'] = datetime.datetime.strptime(yesterday2,"%Y-%m-%d").year 
+heartdf['month'] = datetime.datetime.strptime(yesterday2,"%Y-%m-%d").month
+heartdf['day'] = datetime.datetime.strptime(yesterday2,"%Y-%m-%d").day
+heartdf['dow'] = datetime.datetime.strptime(yesterday2,"%Y-%m-%d").isoweekday() 
 heartdf.to_csv('heart_'+ \
                yesterday2+'.csv', \
-               columns=['Time','Heart Rate'], header=True, \
+               columns=['Time','Heart Rate','year','month','day','dow'], header=True, \
                index = False)
 
